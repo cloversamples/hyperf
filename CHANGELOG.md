@@ -1,5 +1,9 @@
 # v1.1.33 - TBD
 
+## Optimized
+
+- [#1793](https://github.com/hyperf/hyperf/pull/1793) Socket.io server now only dispatch connect/disconnect events in onOpen and onClose. Also upgrade some class members from private to protected, so users can hack them.
+
 # v1.1.32 - 2020-05-21
 
 ## Fixed
@@ -16,6 +20,7 @@
 ## Added
 
 - [#1724](https://github.com/hyperf/hyperf/pull/1724) Added `Model::orWhereHasMorph` ,`Model::whereDoesntHaveMorph` and `Model::orWhereDoesntHaveMorph`.
+- [#1741](https://github.com/hyperf/hyperf/pull/1741) Added `Hyperf\Command\Command::choiceMultiple(): array` method, because the return type of `choice` method is `string`, so the methed cannot handle the multiple selections, even though setted `$multiple` argument.
 - [#1742](https://github.com/hyperf/hyperf/pull/1742) Added Custom Casts for model.
   - Added interface `Castable`, `CastsAttributes` and `CastsInboundAttributes`.
   - Added `Model\Builder::withCasts`.
