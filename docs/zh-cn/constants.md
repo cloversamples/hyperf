@@ -111,7 +111,7 @@ namespace App\Controller;
 use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
 
-class IndexController extends Controller
+class IndexController extends AbstractController
 {
     public function index()
     {
@@ -157,7 +157,7 @@ $message = ErrorCode::getMessage(ErrorCode::PARAMS_INVALID, 'user_id');
 composer require hyperf/translation
 ```
 
-相关配置详见 [国际化](translation.md)
+相关配置详见 [国际化](zh-cn/translation.md)
 
 ```php
 <?php

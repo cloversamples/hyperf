@@ -23,6 +23,7 @@ config
 │   ├── commands.php // 用于管理自定义命令
 │   ├── consul.php // 用于管理 Consul 客户端
 │   ├── databases.php // 用于管理数据库客户端
+│   ├── dependencies.php // 用于管理 DI 的依赖关系和类对应关系
 │   ├── devtool.php // 用于管理开发者工具
 │   ├── exceptions.php // 用于管理异常处理器
 │   ├── listeners.php // 用于管理事件监听者
@@ -34,7 +35,6 @@ config
 │   └── server.php // 用于管理 Server 服务
 ├── config.php // 用于管理用户或框架的配置，如配置相对独立亦可放于 autoload 文件夹内
 ├── container.php // 负责容器的初始化，作为一个配置文件运行并最终返回一个 Psr\Container\ContainerInterface 对象
-├── dependencies.php // 用于管理 DI 的依赖关系和类对应关系
 └── routes.php // 用于管理路由
 ```
 
@@ -47,7 +47,7 @@ config
 declare(strict_types=1);
 
 use Hyperf\Server\Server;
-use Hyperf\Server\SwooleEvent;
+use Hyperf\Server\Event;
 
 return [
     // 这里省略了该文件的其它配置
@@ -68,12 +68,12 @@ return [
 
 如需要设置守护进程化，可在 `settings` 中增加 `'daemonize' => 1`，执行 `php bin/hyperf.php start`后，程序将转入后台作为守护进程运行
 
-单独的 Server 配置需要添加在对应 `servers` 的 `settings` 当中，如 `jsonrpc` 协议的 TCP Server 配置启用 EOF 自动分包，和设置 EOF 字符串
+单独的 Server 配置需要添加在对应 `servers` 的 `settings` 当中，如 `jsonrpc` 协议的 TCP Server 配置启用 EOF 自动分包和设置 EOF 字符串
 ```php
 <?php
 
 use Hyperf\Server\Server;
-use Hyperf\Server\SwooleEvent;
+use Hyperf\Server\Event;
 
 return [
     // 这里省略了该文件的其它配置
@@ -85,7 +85,7 @@ return [
             'port' => 9503,
             'sock_type' => SWOOLE_SOCK_TCP,
             'callbacks' => [
-                SwooleEvent::ON_RECEIVE => [\Hyperf\JsonRpc\TcpServer::class, 'onReceive'],
+                Event::ON_RECEIVE => [\Hyperf\JsonRpc\TcpServer::class, 'onReceive'],
             ],
             'settings' => [
                 'open_eof_split' => true, // 启用 EOF 自动分包
